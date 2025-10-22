@@ -248,7 +248,8 @@ button:disabled {
     border-color: var(--secondary-color);
 }
 
-.learning-option {
+.learning-option,
+.quiz-option {
     display: flex;
     align-items: center;
     width: 100%;
@@ -260,6 +261,28 @@ button:disabled {
     border-radius: var(--radius-md);
     font-size: 16px;
     margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.quiz-option {
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+    transform: translateX(0) !important;
+}
+
+.selected-quiz-option {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.learning-option {
+    cursor: default;
 }
 
 .correct-learning-option {

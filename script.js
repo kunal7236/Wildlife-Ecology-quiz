@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const shuffledOptions = shuffleArray(questionData.options);
 
             shuffledOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.classList.add('option-button');
-                button.textContent = option;
-                button.dataset.questionIndex = index;
-                button.addEventListener('click', () => selectOption(button, index, option));
-                optionsContainer.appendChild(button);
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('quiz-option');
+                optionDiv.textContent = option;
+                optionDiv.dataset.questionIndex = index;
+                optionDiv.addEventListener('click', () => selectOption(optionDiv, index, option));
+                optionsContainer.appendChild(optionDiv);
             });
 
             questionCard.appendChild(questionHeader);
@@ -125,17 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function selectOption(selectedButton, questionIndex, selectedAnswer) {
-        // Get all option buttons for this question
-        const allButtons = document.querySelectorAll(`.option-button[data-question-index="${questionIndex}"]`);
+    function selectOption(selectedDiv, questionIndex, selectedAnswer) {
+        // Get all option divs for this question
+        const allOptions = document.querySelectorAll(`.quiz-option[data-question-index="${questionIndex}"]`);
         
         // Remove selected class from all options in this question
-        allButtons.forEach(button => {
-            button.classList.remove('selected');
+        allOptions.forEach(option => {
+            option.classList.remove('selected-quiz-option');
         });
 
         // Mark the selected option
-        selectedButton.classList.add('selected');
+        selectedDiv.classList.add('selected-quiz-option');
 
         // Store the answer
         userAnswers[questionIndex] = selectedAnswer;
