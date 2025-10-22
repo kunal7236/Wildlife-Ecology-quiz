@@ -6,18 +6,19 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-light: #dbeafe;
-    --secondary-color: #10b981;
-    --danger-color: #ef4444;
-    --warning-color: #f59e0b;
+    --primary-color: #16a34a;
+    --primary-hover: #15803d;
+    --primary-light: #dcfce7;
+    --secondary-color: #0891b2;
+    --danger-color: #dc2626;
+    --warning-color: #ea580c;
+    --success-color: #16a34a;
     --text-dark: #1f2937;
     --text-medium: #4b5563;
     --text-light: #6b7280;
-    --bg-primary: #f9fafb;
+    --bg-primary: #f0fdf4;
     --bg-secondary: #ffffff;
-    --border-color: #e5e7eb;
+    --border-color: #d1d5db;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -29,7 +30,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -66,7 +67,7 @@ h1 {
     margin-bottom: 30px;
     font-size: 2.5em;
     font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -101,7 +102,7 @@ h3 {
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     border-radius: 50px;
     transition: width 0.4s ease;
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 2px 4px rgba(22, 163, 74, 0.4);
 }
 
 /* Button Styles */
@@ -170,16 +171,16 @@ button:disabled {
 .week-button {
     min-width: 140px;
     margin: 8px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .week-button:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
 }
 
 .week-button[data-assignment="all"] {
-    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    background: linear-gradient(135deg, #ea580c, #dc2626);
     width: calc(100% - 16px);
     margin-top: 20px;
     font-size: 18px;
@@ -211,7 +212,7 @@ button:disabled {
 }
 
 .question-number {
-    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     padding: 8px 16px;
     border-radius: 20px;
@@ -269,7 +270,7 @@ button:disabled {
 }
 
 .option-button.selected {
-    background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     border-color: var(--primary-color);
     transform: translateX(0); /* Remove scale effect */
@@ -296,12 +297,12 @@ button:disabled {
 
 #next-button {
     margin-left: auto;
-    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    background: linear-gradient(135deg, var(--primary-color), #15803d);
     padding: 14px 32px;
 }
 
 #next-button:hover {
-    background: linear-gradient(135deg, #059669, var(--secondary-color));
+    background: linear-gradient(135deg, #15803d, var(--primary-color));
 }
 
 /* Results Container */
@@ -310,7 +311,7 @@ button:disabled {
 }
 
 .score-display {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
     padding: 40px;
     border-radius: var(--radius-lg);
@@ -337,11 +338,11 @@ button:disabled {
 }
 
 #review-answers-button {
-    background: linear-gradient(135deg, var(--warning-color), #f97316);
+    background: linear-gradient(135deg, var(--secondary-color), #0e7490);
 }
 
 #restart-button {
-    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    background: linear-gradient(135deg, var(--primary-color), #15803d);
 }
 
 /* Feedback Area */
