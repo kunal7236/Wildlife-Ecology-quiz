@@ -4,10 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const assignmentSelectionDiv = document.getElementById('assignment-selection');
     const quizContainer = document.getElementById('quiz-container');
     const quizTitle = document.getElementById('quiz-title');
-    const questionNumber = document.getElementById('question-number');
-    const questionText = document.getElementById('question-text');
-    const optionsContainer = document.getElementById('options-container');
-    const nextButton = document.getElementById('next-button');
+    const questionsWrapper = document.getElementById('questions-wrapper');
+    const submitButton = document.getElementById('submit-button');
     const progressBar = document.getElementById('progress-bar');
     const resultsContainer = document.getElementById('results-container');
     const scoreSpan = document.getElementById('score');
@@ -19,9 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrongAnswersList = document.getElementById('wrong-answers-list');
 
     let currentQuestions = [];
-    let currentQuestionIndex = 0;
-    let userScore = 0;
-    let userAnswers = []; // To store user's choice and correct answer for review
+    let userAnswers = {}; // Store answers by question index
 
     // Event listeners for assignment selection buttons
     document.querySelectorAll('.week-button').forEach(button => {
@@ -31,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    nextButton.addEventListener('click', loadNextQuestion);
-    reviewAnswersButton.addEventListener('click', showWrongAnswers);
+    submitButton.addEventListener('click', submitQuiz);
+    reviewAnswersButton.addEventListener('click', showAllAnswers);
     restartButton.addEventListener('click', resetQuiz);
 
     function startQuiz(assignmentKey) {
@@ -47,16 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Shuffle questions for variety
         currentQuestions = shuffleArray([...currentQuestions]);
 
-        currentQuestionIndex = 0;
-        userScore = 0;
-        userAnswers = [];
+        userAnswers = {};
 
         assignmentSelectionDiv.style.display = 'none';
         resultsContainer.style.display = 'none';
         feedbackArea.style.display = 'none';
         quizContainer.style.display = 'block';
+        progressBar.style.width = '0%';
 
-        loadQuestion();
+        loadAllQuestions();
+        submitButton.style.display = 'block';
     }
 
     function shuffleArray(array) {
@@ -68,19 +64,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return newArray;
     }
 
-    function loadQuestion() {
-        if (currentQuestionIndex < currentQuestions.length) {
-            const questionData = currentQuestions[currentQuestionIndex];
+    function loadAllQuestions() {
+        questionsWrapper.innerHTML = ''; // Clear previous questions
+
+        currentQuestions.forEach((questionData, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.classList.add('question-card');
+            questionCard.dataset.questionIndex = index;
+
+            const questionHeader = document.createElement('div');
+            questionHeader.classList.add('question-header');
             
-            // Update progress bar
-            const progress = ((currentQuestionIndex) / currentQuestions.length) * 100;
-            progressBar.style.width = progress + '%';
-            
-            // Update question number
-            questionNumber.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
-            
+            const questionNumber = document.createElement('span');
+            questionNumber.classList.add('question-number');
+            questionNumber.textContent = `Question ${index + 1}`;
+            questionHeader.appendChild(questionNumber);
+
+            const questionText = document.createElement('p');
+            questionText.classList.add('question-text');
             questionText.textContent = questionData.question;
-            optionsContainer.innerHTML = ''; // Clear previous options
+
+            const optionsContainer = document.createElement('div');
+            optionsContainer.classList.add('options-container');
 
             // Shuffle options for variety
             const shuffledOptions = shuffleArray(questionData.options);
@@ -89,57 +94,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 const button = document.createElement('button');
                 button.classList.add('option-button');
                 button.textContent = option;
-                button.addEventListener('click', () => selectOption(button, questionData.correctAnswer));
+                button.dataset.questionIndex = index;
+                button.addEventListener('click', () => selectOption(button, index, option));
                 optionsContainer.appendChild(button);
             });
-            
-            nextButton.style.display = 'none'; // Hide next button until an option is selected
-            
-            // Scroll to top of question
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            showResults();
-        }
+
+            questionCard.appendChild(questionHeader);
+            questionCard.appendChild(questionText);
+            questionCard.appendChild(optionsContainer);
+            questionsWrapper.appendChild(questionCard);
+        });
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function selectOption(selectedButton, correctAnswer) {
-        // Disable all options after selection
-        const allButtons = document.querySelectorAll('.option-button');
+    function selectOption(selectedButton, questionIndex, selectedAnswer) {
+        // Get all option buttons for this question
+        const allButtons = document.querySelectorAll(`.option-button[data-question-index="${questionIndex}"]`);
+        
+        // Remove selected class from all options in this question
         allButtons.forEach(button => {
-            button.disabled = true;
             button.classList.remove('selected');
         });
 
-        selectedButton.classList.add('selected'); // Mark selected option
+        // Mark the selected option
+        selectedButton.classList.add('selected');
 
-        const selectedAnswer = selectedButton.textContent;
-        const isCorrect = (selectedAnswer === correctAnswer);
+        // Store the answer
+        userAnswers[questionIndex] = selectedAnswer;
 
-        userAnswers.push({
-            question: currentQuestions[currentQuestionIndex].question,
-            selected: selectedAnswer,
-            correct: correctAnswer,
-            isCorrect: isCorrect
-        });
-
-        if (isCorrect) {
-            userScore++;
-        }
-        
-        nextButton.style.display = 'block'; // Show next button
-        
-        // Add smooth transition
-        setTimeout(() => {
-            nextButton.style.opacity = '1';
-        }, 100);
+        // Update progress bar
+        const answeredCount = Object.keys(userAnswers).length;
+        const progress = (answeredCount / currentQuestions.length) * 100;
+        progressBar.style.width = progress + '%';
     }
 
-    function loadNextQuestion() {
-        currentQuestionIndex++;
-        loadQuestion();
+    function submitQuiz() {
+        // Check if all questions are answered
+        if (Object.keys(userAnswers).length < currentQuestions.length) {
+            const unanswered = currentQuestions.length - Object.keys(userAnswers).length;
+            alert(`Please answer all questions! You have ${unanswered} unanswered question(s).`);
+            
+            // Scroll to first unanswered question
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (!userAnswers.hasOwnProperty(i)) {
+                    const questionCard = document.querySelector(`.question-card[data-question-index="${i}"]`);
+                    questionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    questionCard.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        questionCard.style.animation = '';
+                    }, 500);
+                    break;
+                }
+            }
+            return;
+        }
+
+        showResults();
     }
 
     function showResults() {
+        let userScore = 0;
+        const detailedAnswers = [];
+
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.correctAnswer;
+            
+            if (isCorrect) {
+                userScore++;
+            }
+
+            detailedAnswers.push({
+                question: question.question,
+                selected: userAnswer,
+                correct: question.correctAnswer,
+                isCorrect: isCorrect
+            });
+        });
+
         quizContainer.style.display = 'none';
         resultsContainer.style.display = 'block';
         scoreSpan.textContent = userScore;
@@ -168,19 +202,21 @@ document.addEventListener('DOMContentLoaded', () => {
         performanceMessage.textContent = message;
         performanceMessage.style.marginTop = '15px';
         performanceMessage.style.fontSize = '1.2em';
+
+        // Store detailed answers for review
+        window.detailedAnswers = detailedAnswers;
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showWrongAnswers() {
+    function showAllAnswers() {
         wrongAnswersList.innerHTML = '';
         
-        // Show all answers, not just wrong ones
-        if (userAnswers.length === 0) {
+        if (!window.detailedAnswers || window.detailedAnswers.length === 0) {
             wrongAnswersList.innerHTML = '<li>No answers to review.</li>';
         } else {
-            userAnswers.forEach((item, index) => {
+            window.detailedAnswers.forEach((item, index) => {
                 const listItem = document.createElement('li');
                 if (item.isCorrect) {
                     listItem.classList.add('correct-item');
@@ -211,11 +247,12 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsContainer.style.display = 'none';
         feedbackArea.style.display = 'none';
         wrongAnswersList.innerHTML = '';
+        questionsWrapper.innerHTML = '';
         currentQuestions = [];
-        currentQuestionIndex = 0;
-        userScore = 0;
-        userAnswers = [];
+        userAnswers = {};
+        window.detailedAnswers = [];
         progressBar.style.width = '0%';
+        submitButton.style.display = 'none';
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });

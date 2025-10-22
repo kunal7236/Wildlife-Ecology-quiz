@@ -194,6 +194,28 @@ button:disabled {
     animation: fadeIn 0.5s ease-in;
 }
 
+#questions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.question-card {
+    background: var(--bg-primary);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.question-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
 #question-area {
     margin-bottom: 30px;
     background: var(--bg-primary);
@@ -220,6 +242,7 @@ button:disabled {
     font-size: 14px;
 }
 
+.question-text,
 #question-text {
     font-size: 1.3em;
     margin-bottom: 25px;
@@ -229,6 +252,7 @@ button:disabled {
 }
 
 /* Option Buttons */
+.options-container,
 #options-container {
     display: flex;
     flex-direction: column;
@@ -287,12 +311,31 @@ button:disabled {
 }
 
 /* Navigation Buttons */
-.button-container {
+.button-container,
+.submit-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 25px;
     gap: 10px;
+}
+
+.submit-container {
+    background: var(--bg-primary);
+    padding: 25px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+#submit-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#submit-button:hover {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
 }
 
 #next-button {
@@ -492,4 +535,10 @@ button:disabled {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
