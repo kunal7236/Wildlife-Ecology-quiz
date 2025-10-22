@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildlife Ecology Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wildlife Ecology Quiz</h1>
+
+        <div id="assignment-selection">
+            <h2>Select an Assignment:</h2>
+            <button class="week-button" data-assignment="Assignment 1">Week 1</button>
+            <button class="week-button" data-assignment="Assignment 2">Week 2</button>
+            <button class="week-button" data-assignment="Assignment 3">Week 3</button>
+            <button class="week-button" data-assignment="Assignment 4">Week 4</button>
+            <button class="week-button" data-assignment="Assignment 5">Week 5</button>
+            <button class="week-button" data-assignment="Assignment 6">Week 6</button>
+            <button class="week-button" data-assignment="Assignment 7">Week 7</button>
+            <button class="week-button" data-assignment="Assignment 8">Week 8</button>
+            <button class="week-button" data-assignment="Assignment 9">Week 9</button>
+            <button class="week-button" data-assignment="Assignment 10">Week 10</button>
+
+            <button class="week-button" data-assignment="Assignment 11">Week 11</button>
+            <button class="week-button" data-assignment="all">All Weeks Combined</button>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <h2 id="quiz-title"></h2>
+            <div id="question-area">
+                <p id="question-text"></p>
+                <div id="options-container">
+                    <!-- Options will be dynamically loaded here -->
+                </div>
+                <button id="next-button">Next Question</button>
+            </div>
+        </div>
+
+        <div id="results-container" style="display: none;">
+            <h2>Quiz Results</h2>
+            <p>Your Score: <span id="score"></span> / <span id="total-questions"></span></p>
+            <button id="review-answers-button">Review My Answers</button>
+            <button id="restart-button">Start New Quiz</button>
+            <div id="feedback-area" style="display: none;">
+                <h3>Your Answers:</h3>
+                <ul id="wrong-answers-list">
+                    <!-- Wrong answers feedback will be loaded here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
