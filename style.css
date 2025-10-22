@@ -288,14 +288,14 @@ button:disabled {
 #learning-questions-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .question-card {
     background: var(--bg-primary);
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     border: 2px solid transparent;
@@ -319,11 +319,11 @@ button:disabled {
     background-color: var(--bg-secondary);
     color: var(--text-dark);
     text-align: left;
-    padding: 16px 20px;
+    padding: 12px 16px;
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
-    font-size: 16px;
-    margin-bottom: 12px;
+    font-size: 15px;
+    margin-bottom: 10px;
     transition: all 0.3s ease;
 }
 
@@ -370,9 +370,9 @@ button:disabled {
 }
 
 #question-area {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     background: var(--bg-primary);
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
 }
@@ -381,7 +381,7 @@ button:disabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -397,11 +397,11 @@ button:disabled {
 
 .question-text,
 #question-text {
-    font-size: 1.3em;
-    margin-bottom: 25px;
+    font-size: 1.15em;
+    margin-bottom: 18px;
     color: var(--text-dark);
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 /* Option Buttons */
@@ -409,7 +409,7 @@ button:disabled {
 #options-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .option-button {
