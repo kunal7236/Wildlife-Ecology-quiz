@@ -3,48 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildlife Ecology Quiz</title>
+    <title>Wildlife Ecology Quiz 🌿</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Wildlife Ecology Quiz</h1>
+        <h1>🌿 Wildlife Ecology Quiz</h1>
 
         <div id="assignment-selection">
             <h2>Select an Assignment:</h2>
-            <button class="week-button" data-assignment="Assignment 1">Week 1</button>
-            <button class="week-button" data-assignment="Assignment 2">Week 2</button>
-            <button class="week-button" data-assignment="Assignment 3">Week 3</button>
-            <button class="week-button" data-assignment="Assignment 4">Week 4</button>
-            <button class="week-button" data-assignment="Assignment 5">Week 5</button>
-            <button class="week-button" data-assignment="Assignment 6">Week 6</button>
-            <button class="week-button" data-assignment="Assignment 7">Week 7</button>
-            <button class="week-button" data-assignment="Assignment 8">Week 8</button>
-            <button class="week-button" data-assignment="Assignment 9">Week 9</button>
-            <button class="week-button" data-assignment="Assignment 10">Week 10</button>
-
-            <button class="week-button" data-assignment="Assignment 11">Week 11</button>
-            <button class="week-button" data-assignment="all">All Weeks Combined</button>
+            <button class="week-button" data-assignment="Assignment 1">📚 Week 1</button>
+            <button class="week-button" data-assignment="Assignment 2">📚 Week 2</button>
+            <button class="week-button" data-assignment="Assignment 3">📚 Week 3</button>
+            <button class="week-button" data-assignment="Assignment 4">📚 Week 4</button>
+            <button class="week-button" data-assignment="Assignment 5">📚 Week 5</button>
+            <button class="week-button" data-assignment="Assignment 6">📚 Week 6</button>
+            <button class="week-button" data-assignment="Assignment 7">📚 Week 7</button>
+            <button class="week-button" data-assignment="Assignment 8">📚 Week 8</button>
+            <button class="week-button" data-assignment="Assignment 9">📚 Week 9</button>
+            <button class="week-button" data-assignment="Assignment 10">📚 Week 10</button>
+            <button class="week-button" data-assignment="Assignment 11">📚 Week 11</button>
+            <button class="week-button" data-assignment="all">🎯 All Weeks Combined</button>
         </div>
 
         <div id="quiz-container" style="display: none;">
             <h2 id="quiz-title"></h2>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
             <div id="question-area">
+                <div class="question-header">
+                    <span class="question-number" id="question-number"></span>
+                </div>
                 <p id="question-text"></p>
                 <div id="options-container">
                     <!-- Options will be dynamically loaded here -->
                 </div>
-                <button id="next-button">Next Question</button>
+                <div class="button-container">
+                    <button id="next-button" style="display: none;">Next Question →</button>
+                </div>
             </div>
         </div>
 
         <div id="results-container" style="display: none;">
-            <h2>Quiz Results</h2>
-            <p>Your Score: <span id="score"></span> / <span id="total-questions"></span></p>
-            <button id="review-answers-button">Review My Answers</button>
-            <button id="restart-button">Start New Quiz</button>
+            <div class="score-display">
+                <h2>🎉 Quiz Complete!</h2>
+                <p>Your Score</p>
+                <div>
+                    <span id="score"></span> / <span id="total-questions"></span>
+                </div>
+                <p id="performance-message"></p>
+            </div>
+            
+            <div class="results-buttons">
+                <button id="review-answers-button">📋 Review My Answers</button>
+                <button id="restart-button">🔄 Start New Quiz</button>
+            </div>
+            
             <div id="feedback-area" style="display: none;">
-                <h3>Your Answers:</h3>
+                <h3>📊 Detailed Review:</h3>
                 <ul id="wrong-answers-list">
                     <!-- Wrong answers feedback will be loaded here -->
                 </ul>
