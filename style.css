@@ -157,6 +157,13 @@ button:disabled {
     animation: slideIn 0.5s ease-out;
 }
 
+#learning-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid var(--border-color);
+    animation: slideIn 0.5s ease-out;
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -187,14 +194,35 @@ button:disabled {
     padding: 16px 28px;
 }
 
+.learning-button {
+    min-width: 140px;
+    margin: 8px;
+    background: linear-gradient(135deg, #0891b2, #0e7490);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.learning-button:hover {
+    background: linear-gradient(135deg, #0e7490, #0891b2);
+}
+
+#back-to-menu {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    padding: 10px 24px;
+}
+
+#back-to-menu:hover {
+    background: linear-gradient(135deg, #4b5563, #6b7280);
+}
+
 /* Quiz Container */
-#quiz-container, #results-container {
+#quiz-container, #results-container, #learning-container {
     margin-top: 30px;
     text-align: left;
     animation: fadeIn 0.5s ease-in;
 }
 
-#questions-wrapper {
+#questions-wrapper,
+#learning-questions-wrapper {
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -214,6 +242,45 @@ button:disabled {
 .question-card:hover {
     box-shadow: var(--shadow-md);
     border-color: var(--primary-color);
+}
+
+.learning-card:hover {
+    border-color: var(--secondary-color);
+}
+
+.learning-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    color: var(--text-dark);
+    text-align: left;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.correct-learning-option {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-color: var(--success-color);
+    font-weight: 600;
+    color: #15803d;
+}
+
+.check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: var(--success-color);
+    color: white;
+    border-radius: 50%;
+    margin-right: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
 #question-area {

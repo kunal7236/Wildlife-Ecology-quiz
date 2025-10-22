@@ -2,10 +2,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const assignmentSelectionDiv = document.getElementById('assignment-selection');
+    const learningSection = document.getElementById('learning-section');
     const quizContainer = document.getElementById('quiz-container');
+    const learningContainer = document.getElementById('learning-container');
     const quizTitle = document.getElementById('quiz-title');
+    const learningTitle = document.getElementById('learning-title');
     const questionsWrapper = document.getElementById('questions-wrapper');
+    const learningQuestionsWrapper = document.getElementById('learning-questions-wrapper');
     const submitButton = document.getElementById('submit-button');
+    const backToMenuButton = document.getElementById('back-to-menu');
     const progressBar = document.getElementById('progress-bar');
     const resultsContainer = document.getElementById('results-container');
     const scoreSpan = document.getElementById('score');
@@ -27,9 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Event listeners for learning buttons
+    document.querySelectorAll('.learning-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const assignmentKey = event.target.dataset.assignment;
+            startLearningMode(assignmentKey);
+        });
+    });
+
     submitButton.addEventListener('click', submitQuiz);
     reviewAnswersButton.addEventListener('click', showAllAnswers);
     restartButton.addEventListener('click', resetQuiz);
+    backToMenuButton.addEventListener('click', backToMenu);
 
     function startQuiz(assignmentKey) {
         if (assignmentKey === 'all') {
@@ -46,8 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         userAnswers = {};
 
         assignmentSelectionDiv.style.display = 'none';
+        learningSection.style.display = 'none';
         resultsContainer.style.display = 'none';
         feedbackArea.style.display = 'none';
+        learningContainer.style.display = 'none';
         quizContainer.style.display = 'block';
         progressBar.style.width = '0%';
 
@@ -243,9 +259,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetQuiz() {
         assignmentSelectionDiv.style.display = 'block';
+        learningSection.style.display = 'block';
         quizContainer.style.display = 'none';
         resultsContainer.style.display = 'none';
         feedbackArea.style.display = 'none';
+        learningContainer.style.display = 'none';
         wrongAnswersList.innerHTML = '';
         questionsWrapper.innerHTML = '';
         currentQuestions = [];
@@ -254,6 +272,77 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = '0%';
         submitButton.style.display = 'none';
         
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToMenu() {
+        assignmentSelectionDiv.style.display = 'block';
+        learningSection.style.display = 'block';
+        learningContainer.style.display = 'none';
+        learningQuestionsWrapper.innerHTML = '';
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startLearningMode(assignmentKey) {
+        const questions = allQuestions[assignmentKey];
+        learningTitle.textContent = `📖 ${assignmentKey} - Learning Mode`;
+
+        assignmentSelectionDiv.style.display = 'none';
+        learningSection.style.display = 'none';
+        quizContainer.style.display = 'none';
+        resultsContainer.style.display = 'none';
+        learningContainer.style.display = 'block';
+
+        loadLearningQuestions(questions);
+    }
+
+    function loadLearningQuestions(questions) {
+        learningQuestionsWrapper.innerHTML = '';
+
+        questions.forEach((questionData, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.classList.add('question-card', 'learning-card');
+
+            const questionHeader = document.createElement('div');
+            questionHeader.classList.add('question-header');
+            
+            const questionNumber = document.createElement('span');
+            questionNumber.classList.add('question-number');
+            questionNumber.textContent = `Question ${index + 1}`;
+            questionHeader.appendChild(questionNumber);
+
+            const questionText = document.createElement('p');
+            questionText.classList.add('question-text');
+            questionText.textContent = questionData.question;
+
+            const optionsContainer = document.createElement('div');
+            optionsContainer.classList.add('options-container');
+
+            // Display options WITHOUT shuffling
+            questionData.options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('learning-option');
+                
+                // Mark correct answer
+                if (option === questionData.correctAnswer) {
+                    optionDiv.classList.add('correct-learning-option');
+                    optionDiv.innerHTML = `<span class="check-icon">✓</span> ${option}`;
+                } else {
+                    optionDiv.textContent = option;
+                }
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            questionCard.appendChild(questionHeader);
+            questionCard.appendChild(questionText);
+            questionCard.appendChild(optionsContainer);
+            learningQuestionsWrapper.appendChild(questionCard);
+        });
+
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
