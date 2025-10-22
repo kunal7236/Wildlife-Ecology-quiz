@@ -56,6 +56,15 @@
             <button id="back-to-menu-quiz" style="margin-bottom: 20px;">← Back to Menu</button>
             <h2 id="quiz-title"></h2>
             
+            <!-- Timer Section -->
+            <div class="timer-section">
+                <button id="start-timer-btn" class="timer-button">⏱️ Start Timer</button>
+                <div id="timer-display" style="display: none;">
+                    <span class="timer-label">Time:</span>
+                    <span id="timer-text">00:00</span>
+                </div>
+            </div>
+            
             <!-- Progress Bar -->
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
@@ -78,6 +87,7 @@
                     <span id="score"></span> / <span id="total-questions"></span>
                 </div>
                 <p id="performance-message"></p>
+                <p id="time-taken" style="display: none; margin-top: 10px; font-size: 1.1em;"></p>
             </div>
             
             <div class="results-buttons">

@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToMenuBottomButton = document.getElementById('back-to-menu-bottom');
     const backToMenuQuizButton = document.getElementById('back-to-menu-quiz');
     const progressBar = document.getElementById('progress-bar');
+    const startTimerBtn = document.getElementById('start-timer-btn');
+    const timerDisplay = document.getElementById('timer-display');
+    const timerText = document.getElementById('timer-text');
+    const timeTakenDisplay = document.getElementById('time-taken');
     const resultsContainer = document.getElementById('results-container');
     const scoreSpan = document.getElementById('score');
     const totalQuestionsSpan = document.getElementById('total-questions');
@@ -25,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuestions = [];
     let userAnswers = {}; // Store answers by question index
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let timerStarted = false;
 
     // Event listeners for assignment selection buttons
     document.querySelectorAll('.week-button').forEach(button => {
@@ -48,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backToMenuButton.addEventListener('click', backToMenu);
     backToMenuBottomButton.addEventListener('click', backToMenu);
     backToMenuQuizButton.addEventListener('click', backToMenu);
+    startTimerBtn.addEventListener('click', startTimer);
 
     function startQuiz(assignmentKey) {
         if (assignmentKey === 'all') {
@@ -70,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         learningContainer.style.display = 'none';
         quizContainer.style.display = 'block';
         progressBar.style.width = '0%';
+
+        // Reset timer
+        stopTimer();
+        timerSeconds = 0;
+        timerStarted = false;
+        startTimerBtn.style.display = 'inline-block';
+        startTimerBtn.disabled = false;
+        timerDisplay.style.display = 'none';
+        timerText.textContent = '00:00';
+        timeTakenDisplay.style.display = 'none';
 
         loadAllQuestions();
         submitButton.style.display = 'block';
@@ -151,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function submitQuiz() {
+        stopTimer();
         showResults();
     }
 
@@ -203,6 +222,15 @@ document.addEventListener('DOMContentLoaded', () => {
         performanceMessage.style.marginTop = '15px';
         performanceMessage.style.fontSize = '1.2em';
 
+        // Show time taken if timer was started
+        if (timerStarted) {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timeTakenDisplay.textContent = `⏱️ Time Taken: ${timeString}`;
+            timeTakenDisplay.style.display = 'block';
+        }
+
         // Store detailed answers for review
         window.detailedAnswers = detailedAnswers;
         
@@ -242,6 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function resetQuiz() {
+        stopTimer();
         assignmentSelectionDiv.style.display = 'block';
         learningSection.style.display = 'block';
         quizContainer.style.display = 'none';
@@ -255,12 +284,16 @@ document.addEventListener('DOMContentLoaded', () => {
         window.detailedAnswers = [];
         progressBar.style.width = '0%';
         submitButton.style.display = 'none';
+        timerSeconds = 0;
+        timerStarted = false;
+        timeTakenDisplay.style.display = 'none';
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function backToMenu() {
+        stopTimer();
         assignmentSelectionDiv.style.display = 'block';
         learningSection.style.display = 'block';
         learningContainer.style.display = 'none';
@@ -272,9 +305,35 @@ document.addEventListener('DOMContentLoaded', () => {
         userAnswers = {};
         progressBar.style.width = '0%';
         submitButton.style.display = 'none';
+        timerSeconds = 0;
+        timerStarted = false;
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startTimer() {
+        if (timerStarted) return;
+        
+        timerStarted = true;
+        timerSeconds = 0;
+        startTimerBtn.disabled = true;
+        startTimerBtn.textContent = '⏱️ Timer Running';
+        timerDisplay.style.display = 'flex';
+        
+        timerInterval = setInterval(() => {
+            timerSeconds++;
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            timerText.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    function stopTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
     }
 
     function startLearningMode(assignmentKey) {

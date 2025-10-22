@@ -109,7 +109,57 @@ h3 {
     height: 10px;
 }
 
-.progress-bar {
+/* Timer Section */
+.timer-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+}
+
+.timer-button {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    padding: 10px 24px;
+    font-size: 15px;
+}
+
+.timer-button:hover {
+    background: linear-gradient(135deg, #ea580c, #f59e0b);
+}
+
+.timer-button:disabled {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    cursor: not-allowed;
+}
+
+#timer-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.timer-label {
+    color: var(--text-medium);
+    font-size: 0.9em;
+}
+
+#timer-text {
+    font-family: 'Courier New', monospace;
+    background: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--primary-color);
+    min-width: 80px;
+    text-align: center;
+}
+
+.progress-container {
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
     border-radius: 50px;
