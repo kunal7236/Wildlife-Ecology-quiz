@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const learningQuestionsWrapper = document.getElementById('learning-questions-wrapper');
     const submitButton = document.getElementById('submit-button');
     const backToMenuButton = document.getElementById('back-to-menu');
+    const backToMenuBottomButton = document.getElementById('back-to-menu-bottom');
+    const backToMenuQuizButton = document.getElementById('back-to-menu-quiz');
     const progressBar = document.getElementById('progress-bar');
     const resultsContainer = document.getElementById('results-container');
     const scoreSpan = document.getElementById('score');
@@ -44,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     reviewAnswersButton.addEventListener('click', showAllAnswers);
     restartButton.addEventListener('click', resetQuiz);
     backToMenuButton.addEventListener('click', backToMenu);
+    backToMenuBottomButton.addEventListener('click', backToMenu);
+    backToMenuQuizButton.addEventListener('click', backToMenu);
 
     function startQuiz(assignmentKey) {
         if (assignmentKey === 'all') {
@@ -147,26 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function submitQuiz() {
-        // Check if all questions are answered
-        if (Object.keys(userAnswers).length < currentQuestions.length) {
-            const unanswered = currentQuestions.length - Object.keys(userAnswers).length;
-            alert(`Please answer all questions! You have ${unanswered} unanswered question(s).`);
-            
-            // Scroll to first unanswered question
-            for (let i = 0; i < currentQuestions.length; i++) {
-                if (!userAnswers.hasOwnProperty(i)) {
-                    const questionCard = document.querySelector(`.question-card[data-question-index="${i}"]`);
-                    questionCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    questionCard.style.animation = 'shake 0.5s';
-                    setTimeout(() => {
-                        questionCard.style.animation = '';
-                    }, 500);
-                    break;
-                }
-            }
-            return;
-        }
-
         showResults();
     }
 
@@ -176,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentQuestions.forEach((question, index) => {
             const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.correctAnswer;
+            const isCorrect = userAnswer && (userAnswer === question.correctAnswer);
             
             if (isCorrect) {
                 userScore++;
@@ -184,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             detailedAnswers.push({
                 question: question.question,
-                selected: userAnswer,
+                selected: userAnswer || 'Not answered',
                 correct: question.correctAnswer,
                 isCorrect: isCorrect
             });
@@ -280,7 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
         assignmentSelectionDiv.style.display = 'block';
         learningSection.style.display = 'block';
         learningContainer.style.display = 'none';
+        quizContainer.style.display = 'none';
+        resultsContainer.style.display = 'none';
+        feedbackArea.style.display = 'none';
         learningQuestionsWrapper.innerHTML = '';
+        questionsWrapper.innerHTML = '';
+        userAnswers = {};
+        progressBar.style.width = '0%';
+        submitButton.style.display = 'none';
         
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });

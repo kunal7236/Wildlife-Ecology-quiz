@@ -87,6 +87,18 @@ h3 {
     font-weight: 600;
 }
 
+.section-description {
+    margin-bottom: 20px;
+    color: var(--text-medium);
+    font-size: 1.05em;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--primary-light), var(--bg-primary));
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--secondary-color);
+    text-align: left;
+}
+
 /* Progress Indicator */
 .progress-container {
     width: 100%;
@@ -153,11 +165,11 @@ button:disabled {
 }
 
 /* Week Selection Grid */
-#assignment-selection {
+#learning-section {
     animation: slideIn 0.5s ease-out;
 }
 
-#learning-section {
+#assignment-selection {
     margin-top: 40px;
     padding-top: 30px;
     border-top: 2px solid var(--border-color);
