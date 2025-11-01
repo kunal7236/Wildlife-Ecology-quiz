@@ -292,7 +292,7 @@ const allQuestions = {
                 "both participants are benefitted",
                 "both participants are unharmed"
             ],
-            correctAnswer: "both participants are benefitted"
+            correctAnswer: "both participants are unharmed"
         },
         {
             question: "An inventory of behaviours exhibited by an animal during a behaviour exercise is called",
@@ -506,7 +506,7 @@ const allQuestions = {
                 "Physiological longevity < Ecological longevity",
                 "a or b"
             ],
-            correctAnswer: "Physiological longevity > Ecological longevity"
+            correctAnswer: "a or b"
         }
     ],
     "Assignment 6": [
@@ -588,7 +588,7 @@ const allQuestions = {
                 "Fundamental niche < Realised niche",
                 "a or b"
             ],
-            correctAnswer: "Fundamental niche > Realised niche"
+            correctAnswer: "a or b"
         },
         {
             question: "When compared to generalist species, specialist species have",
@@ -1078,7 +1078,7 @@ const allQuestions = {
                 "it is not causing any economic damage",
                 "it is not causing excessive economic damage"
             ],
-            correctAnswer: "it is not causing any economic damage"
+            correctAnswer: "it is not causing excessive economic damage"
         },
         {
             question: "A deciduous forest in Madhya Pradesh was converted to a mine. After the mining operations were over, the pits were filled up with water and a lake was created. It is now visited by several migratory birds. This is an example of",
